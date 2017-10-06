@@ -1,0 +1,24 @@
+{
+  "name": "choo-tts",
+  "version": "0.1.0",
+  "description": "Simple text-to-speech in the browser for choo",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard --verbose | snazzy",
+    "start": "budo -p 8080 -H 0.0.0.0 example.js"
+  },
+  "keywords": [
+    "choo",
+    "tts",
+    "text-to-speech",
+    "web"
+  ],
+  "author": "Yerko Palma",
+  "license": "MIT",
+  "devDependencies": {
+    "budo": "^10.0.4",
+    "choo": "^6.3.0",
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.3"
+  }
+}
