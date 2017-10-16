@@ -52,6 +52,13 @@ Emit this event to cancel all qeued speechs.
 ### `tts:voices-changed` | `tts.events.VOICES_CHANGED`
 Set this event to handle every change on the availaible voices.
 
+### `tts:set-voice` | `tts.events.SET_VOICE`
+Set the voice you want passing a string with the name of the voice. Use this 
+event if you are sure of the name of the voice and that the voice is present in 
+the client, otherwise it will throw. If you are unsure of the name, directly 
+select the voice object from the `state.tts.voices` array.
+
+
 ## API
 ### `tts = require('choo-tts')`
 Load the plugin and populate a `tts` object to the state.

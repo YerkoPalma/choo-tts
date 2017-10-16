@@ -22,14 +22,16 @@ function mainView (state, emit) {
 
   function onclick () {
     // speak with default voice
-    state.tts.selectedVoice = state.tts.voices[document.querySelector('select').value]
+    // state.tts.selectedVoice = state.tts.voices[document.querySelector('select').value]
     emit('tts:speak', document.getElementById('text').value)
   }
 }
 
 function speech (state, emitter) {
   emitter.on('DOMContentLoaded', function () {
-    console.log(state.tts.voices)
     emitter.emit('render')
+  })
+  emitter.once('tts:voices-changed', function () {
+    emitter.emit('tts:set-voice', 'Google UK English Female')
   })
 }
