@@ -7,6 +7,7 @@ var events = tts.events = {
   PAUSE: 'tts:pause',
   RESUME: 'tts:resume',
   VOICES_CHANGED: 'tts:voices-changed',
+  SET_VOICE: 'tts:set-voice',
   ERROR: 'tts:error'
 }
 
@@ -56,6 +57,14 @@ function tts (state, emitter) {
       state.tts.voices = synth.getVoices()
       emitter.emit(events.VOICES_CHANGED)
     }
+    emitter.on(events.SET_VOICE, voiceName => {
+      if (!state.tts.voices) throw new Error('tts: Voices array no set yet, can\'t set voice')
+      var voice = state.tts.voices.filter(v => {
+        return v.name === voiceName
+      })[0]
+      if (!voice) throw new Error('tts: Voice ' + voiceName + ' not found')
+      state.tts.selectedVoice = voice
+    })
   } catch (e) {
     emitter.emit(events.ERROR, e)
   }
