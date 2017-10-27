@@ -8,6 +8,9 @@ var events = tts.events = {
   RESUME: 'tts:resume',
   VOICES_CHANGED: 'tts:voices-changed',
   SET_VOICE: 'tts:set-voice',
+  SPEECH_START: 'tts:speech-start',
+  SPEECH_END: 'tts:speech-end',
+  SPEECH_BOUNDARY: 'tts:speech-boundary',
   ERROR: 'tts:error'
 }
 
@@ -33,6 +36,7 @@ function tts (state, emitter) {
     }, 0)
     emitter.on(events.SPEAK, speech => {
       var utterance = null
+      var speechId
       // if a string is passed, use values from the state
       if (typeof speech === 'string') {
         utterance = new SpeechSynthesisUtterance(speech)
@@ -47,8 +51,18 @@ function tts (state, emitter) {
         utterance.pitch = opts.pitch
         utterance.rate = opts.rate
         utterance.volume = opts.volume
+        speechId = opts.id
       }
       synth.speak(utterance)
+      utterance.onstart = function (event) {
+        emitter.emit(events.SPEECH_START, event, speechId)
+      }
+      utterance.onend = function (event) {
+        emitter.emit(events.SPEECH_END, event, speechId)
+      }
+      utterance.onboundary = function (event) {
+        emitter.emit(events.SPEECH_BOUNDARY, event, speechId)
+      }
     })
     emitter.on(events.CANCEL, synth.cancel)
     emitter.on(events.PAUSE, synth.pause)
