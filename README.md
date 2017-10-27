@@ -36,7 +36,8 @@ Emitted when there is an error. It will get the error thrown as argument.
 Emit this event to speak some text. Can get a string and speak it with the 
 default settings, or can get an object with rate, pitch and volume settings 
 (lang is set in the voice, and the voice to speak is set in the 
-`state.selectedVoice`)
+`state.selectedVoice`). If you pass an object you can add an additional `id` 
+property that can be used to identify this speech for the speech events.
 
 ### `tts:pause` | `tts.events.PAUSE`
 Emit this event to pause an ongoing speak. If there is no speaking taking place, 
@@ -58,6 +59,52 @@ event if you are sure of the name of the voice and that the voice is present in
 the client, otherwise it will throw. If you are unsure of the name, directly 
 select the voice object from the `state.tts.voices` array.
 
+### `tts:speech-start` | `tts.events.SPEECH_START`
+Emitted when a speech starts. The first argument passed is the event itself. 
+This event will be fired with every speech, but you can set this for a specific 
+speech, if you set an `id` property to the object passed to the speak event. For 
+example,
+
+```js
+function speech (state, emitter) {
+  emitter.on('tts:speech-start', function (e) {
+    console.log('Speech started!')
+  })
+  emitter.on('tts:speech-start', function (e, id) {
+    if (id === 'my-speech') console.log('My speech just started!')
+  })
+}
+
+// later in yout view
+function view (state, emit) {
+  return html`<body>
+    <button onclick="${regularSpeech}">regular speech</button>
+    <button onclick="${customSpeech}">custom speech</button>
+  </body>`
+
+  function regularSpeech () {
+    emit('tts:speak', 'Just some regular speaking')
+  }
+  function customSpeech () {
+    emit('tts:speak', {
+      text: 'This speech is really special!',
+      id: 'my-speech'
+    })
+  }
+}
+```
+
+### `tts:speech-boundary` | `tts.events.SPEECH_BOUNDARY`
+Emitted when a word or sentence boundary is reched during a speech. The first 
+argument passed is the event itself. This event will be fired with every 
+speech, but you can set this for a specific speech, if you set an `id` 
+property to the object passed to the speak event.
+
+### `tts:speech-end` | `tts.events.SPEECH_END`
+Emitted when a speech finish being spoken. The first 
+argument passed is the event itself. This event will be fired with every 
+speech, but you can set this for a specific speech, if you set an `id` 
+property to the object passed to the speak event.
 
 ## API
 ### `tts = require('choo-tts')`
