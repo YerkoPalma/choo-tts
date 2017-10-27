@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Simple text-to-speech in the browser for choo",
   "main": "index.js",
+  "repository": "YerkoPalma/choo-tts",
   "scripts": {
     "test": "standard --verbose | snazzy",
     "start": "budo -p 8080 -H 0.0.0.0 example.js"
