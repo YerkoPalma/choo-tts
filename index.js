@@ -55,13 +55,13 @@ function tts (state, emitter) {
       }
       synth.speak(utterance)
       utterance.onstart = function (event) {
-        emitter.emit(events.SPEECH_START, event, speechId)
+        emitter.emit(events.SPEECH_START, { event, id: speechId })
       }
       utterance.onend = function (event) {
-        emitter.emit(events.SPEECH_END, event, speechId)
+        emitter.emit(events.SPEECH_END, { event, id: speechId })
       }
       utterance.onboundary = function (event) {
-        emitter.emit(events.SPEECH_BOUNDARY, event, speechId)
+        emitter.emit(events.SPEECH_BOUNDARY, { event, id: speechId })
       }
     })
     emitter.on(events.CANCEL, synth.cancel)
