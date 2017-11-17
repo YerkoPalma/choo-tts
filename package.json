@@ -18,7 +18,7 @@
   "license": "MIT",
   "devDependencies": {
     "budo": "^10.0.4",
-    "choo": "^6.3.0",
+    "choo": "^6.6.0",
     "snazzy": "^7.0.0",
     "standard": "^10.0.3"
   }

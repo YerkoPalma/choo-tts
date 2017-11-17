@@ -44,7 +44,7 @@ function speech (state, emitter) {
     emitter.emit('tts:set-voice', 'Google UK English Female')
   })
   emitter.on('tts:speech-end', function ({ event, id }) {
-    alert(`speech took ${event.elapsedTime} ms`)
-    if (id === 'special') alert('Tha was special!')
+    window.alert(`speech took ${event.elapsedTime} ms`)
+    if (id === 'special') window.alert('Tha was special!')
   })
 }

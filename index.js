@@ -30,10 +30,13 @@ function tts (state, emitter) {
         return synth.paused ? 'PAUSED' : synth.pending ? 'PENDING' : synth.speaking ? 'SPEAKING' : 'READY'
       }
     })
-    setTimeout(function () {
-      state.tts.voices = synth.getVoices()
-      state.tts.selectedVoice = state.tts.voices.filter(voice => voice.default)[0]
-    }, 0)
+    Object.defineProperty(state.tts, 'voices', {
+      get: function () {
+        return synth.getVoices()
+      }
+    })
+    state.tts.selectedVoice = state.tts.voices.filter(voice => voice.default)[0]
+
     emitter.on(events.SPEAK, speech => {
       var utterance = null
       var speechId
