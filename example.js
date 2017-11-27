@@ -2,7 +2,7 @@ var choo = require('choo')
 var html = require('choo/html')
 
 var app = choo()
-app.use(require('.'))
+app.use(require('.')())
 app.use(speech)
 app.route('/', mainView)
 app.mount('body')
@@ -45,6 +45,6 @@ function speech (state, emitter) {
   })
   emitter.on('tts:speech-end', function ({ event, id }) {
     window.alert(`speech took ${event.elapsedTime} ms`)
-    if (id === 'special') window.alert('Tha was special!')
+    if (id === 'special') window.alert('That was special!')
   })
 }

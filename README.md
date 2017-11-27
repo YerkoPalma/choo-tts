@@ -10,7 +10,7 @@ var choo = require('choo')
 var html = require('choo/html')
 
 var app = choo()
-app.use(require('choo-tts'))
+app.use(require('choo-tts')())
 app.route('/', mainView)
 app.mount('body')
 
@@ -76,7 +76,7 @@ function speech (state, emitter) {
   })
 }
 
-// later in yout view
+// later in your view
 function view (state, emit) {
   return html`<body>
     <button onclick="${regularSpeech}">regular speech</button>
@@ -108,8 +108,21 @@ with every speech, but you can set this for a specific speech, if you set an `id
 property to the object passed to the speak event. 
 
 ## API
-### `tts = require('choo-tts')`
-Load the plugin and populate a `tts` object to the state.
+### `plugin = tts([opts])`
+The plugin accept an options object and return the plugin. The `opts` object 
+can have the following properties:
+
+- `voice`: A string with the name of the voice to be selected as `selectedVoice`.
+if not set, or not found, will use the browser default voice.
+- `rate`: The speed of the utterance to be spoken, can be a value 
+from 0.1 to 10, defaults to 1.
+- `pitch`: The pitch of the utterance to be spoken, can be a value from 0 
+to 2, defaults to 1.
+- `volume`: The volume of the utterance to be spoken, can be a value from 0 
+to 1, defaults to 0.5.
+
+If everything goes right, then the plugin will populate a `tts` object to the 
+state.
 
 - `tts.state`: Get the state of text-to-speech object. Can be any of the 
 following strings: `PAUSED`, `PENDING`, `SPEAKING` or `READY`.
