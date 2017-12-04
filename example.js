@@ -22,13 +22,14 @@ function mainView (state, emit) {
   `
 
   function onclick () {
-    // speak with default voice
+    // select voice by name
+    emit('tts:set-voice', document.querySelector('select').selectedOptions[0].text)
+    // also valid
     // state.tts.selectedVoice = state.tts.voices[document.querySelector('select').value]
     emit('tts:speak', document.getElementById('text').value)
   }
   function oncustomclick () {
     // speak with default voice
-    // state.tts.selectedVoice = state.tts.voices[document.querySelector('select').value]
     emit('tts:speak', {
       text: 'This is some special speaking',
       id: 'special'
@@ -40,9 +41,7 @@ function speech (state, emitter) {
   emitter.on('DOMContentLoaded', function () {
     emitter.emit('render')
   })
-  emitter.once('tts:voices-changed', function () {
-    emitter.emit('tts:set-voice', 'Google UK English Female')
-  })
+
   emitter.on('tts:speech-end', function ({ event, id }) {
     window.alert(`speech took ${event.elapsedTime} ms`)
     if (id === 'special') window.alert('That was special!')
