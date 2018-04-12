@@ -75,7 +75,6 @@ function tts (opts) {
       emitter.on(events.PAUSE, synth.pause)
       emitter.on(events.RESUME, synth.resume)
       synth.onvoiceschanged = function () {
-        state.tts.voices = synth.getVoices()
         emitter.emit(events.VOICES_CHANGED)
       }
       emitter.on(events.SET_VOICE, voiceName => {
