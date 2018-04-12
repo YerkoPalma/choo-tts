@@ -1,6 +1,6 @@
 {
   "name": "choo-tts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple text-to-speech in the browser for choo",
   "main": "index.js",
   "repository": "YerkoPalma/choo-tts",
